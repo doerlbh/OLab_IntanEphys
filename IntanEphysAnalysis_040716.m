@@ -19,7 +19,9 @@ read_Intan_RHD2000_file
 %whether accessory amplifier channels were disabled or not during recording
 %% Establishing some basic variables from values pulled in by above function
 
-amplifier_channels(1) %Channel data is being collected on (on 
+amp_chan = 5;
+
+amplifier_channels(amp_chan) %Channel data is being collected on (on 
 %preamplifier this would be 'A-004'
 %Above command gives data output about the channel on which data is being
 %collected
@@ -28,7 +30,7 @@ amplifier_channels(1) %Channel data is being collected on (on
 
 tRat = t_amplifier; %time variable for ephys data
 tLED = t_dig; %time variable for LED data
-ui.ratData = amplifier_data(1,:);
+ui.ratData = amplifier_data(amp_chan,:);
 lLED = board_dig_in_data(1,:);
 rLED = board_dig_in_data(2,:);
 

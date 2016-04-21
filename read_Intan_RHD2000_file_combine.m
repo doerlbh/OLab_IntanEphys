@@ -1,6 +1,9 @@
 function read_Intan_RHD2000_file
 
-% read_Intan_RHD2000_file
+% Modified by Baihan Lin
+% Apr 2016
+
+% read_Intan_RHD2000_file_combine
 %
 % Version 1.3, 10 December 2013
 %
@@ -17,13 +20,23 @@ function read_Intan_RHD2000_file
 % >> amplifier_channels(1)
 % >> plot(t_amplifier, amplifier_data(1,:))
 
-[file, path, filterindex] = uigetfile('*.rhd', 'Select an RHD2000 Data File', 'MultiSelect', 'off');
+% Here I change it from:
+%[file, path, filterindex] = uigetfile('*.rhd', 'Select an RHD2000 Data File', 'MultiSelect', 'off');
+
+% To:
+prompt = 'What is your folder?: ';
+path = input(prompt,'s');
+
+% So that I can specify a folder to access all data files.
+
+%[status, list] = system('cd path');
+[~,list] = system(['find ' path ' -type f -name "*.rhd"'])
 
 % Read most recent file automatically.
 %path = 'C:\Users\Reid\Documents\RHD2132\testing\';
 %d = dir([path '*.rhd']);
 %file = d(end).name;
-
+%%
 tic;
 filename = [path,file];
 fid = fopen(filename, 'r');
