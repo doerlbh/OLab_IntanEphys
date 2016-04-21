@@ -1,9 +1,9 @@
-function read_Intan_RHD2000_file
+function arrange_Intan_RHD(path, file)
 
 % Modified by Baihan Lin
 % Apr 2016
 
-% read_Intan_RHD2000_file_combine
+% Built upon read_Intan_RHD2000_file
 %
 % Version 1.3, 10 December 2013
 %
@@ -13,30 +13,7 @@ function read_Intan_RHD2000_file
 % command before running this program to clear all other variables from the
 % base workspace.
 %
-% Example:
-% >> clear
-% >> read_Intan_RHD200_file
-% >> whos
-% >> amplifier_channels(1)
-% >> plot(t_amplifier, amplifier_data(1,:))
 
-% Here I change it from:
-%[file, path, filterindex] = uigetfile('*.rhd', 'Select an RHD2000 Data File', 'MultiSelect', 'off');
-
-% To:
-prompt = 'What is your folder?: ';
-path = input(prompt,'s');
-
-% So that I can specify a folder to access all data files.
-
-%[status, list] = system('cd path');
-[~,list] = system(['find ' path ' -type f -name "*.rhd"'])
-
-% Read most recent file automatically.
-%path = 'C:\Users\Reid\Documents\RHD2132\testing\';
-%d = dir([path '*.rhd']);
-%file = d(end).name;
-%%
 tic;
 filename = [path,file];
 fid = fopen(filename, 'r');
