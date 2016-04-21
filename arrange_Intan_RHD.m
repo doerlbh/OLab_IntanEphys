@@ -1,4 +1,4 @@
-function arrange_Intan_RHD(path, file)
+function arrange_Intan_RHD(file)
 
 % Modified by Baihan Lin
 % Apr 2016
@@ -15,8 +15,7 @@ function arrange_Intan_RHD(path, file)
 %
 
 tic;
-filename = [path,file];
-fid = fopen(filename, 'r');
+fid = fopen(file, 'r');
 
 s = dir(filename);
 filesize = s.bytes;

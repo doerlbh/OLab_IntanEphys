@@ -27,7 +27,8 @@ function read_Intan_RHD_combine
 %path = 'C:\Users\Reid\Documents\RHD2132\testing\';
 %d = dir([path '*.rhd']);
 %file = d(end).name;
-%% I decided to use automatic method for data collection:
+
+% I decided to use automatic method for data collection:
 
 prompt = 'What is your folder?: ';
 path = input(prompt,'s');
@@ -35,10 +36,27 @@ path = input(prompt,'s');
 % So that I can specify a folder to access all data files.
 
 %[status, list] = system('cd path');
-[~,list] = system(['find ' path ' -type f -name "*.rhd"'])
+[~,list] = system(['find ' path ' -type f -name "*.rhd"']);
 
 files = strsplit(list);
 length(files);
 
+for countfile = 1:length(files)
+    trials{countfile} = files{countfile}(1:end-11);
+end
 
+trials = unique(trials);
+trials = trials(~cellfun('isempty',trials));
+
+for trial = 1 : length(trials)
+    index = strfind(files, trials{trial});
+    for ind = 1 : length(index)
+        if index{ind} == 1
+            arrange_Intan_RHD(files{ind});
+        end
+    end
+    disp('----------------')
+end
+
+%%
 arrange_Intan_RHD(path, file)
