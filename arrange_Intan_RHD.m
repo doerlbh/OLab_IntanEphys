@@ -17,7 +17,7 @@ function arrange_Intan_RHD(file)
 tic;
 fid = fopen(file, 'r');
 
-s = dir(filename);
+s = dir(file);
 filesize = s.bytes;
 
 % Check 'magic number' at beginning of file to make sure this is an Intan

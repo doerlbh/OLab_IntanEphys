@@ -197,21 +197,25 @@ times
     figure % creates raster plot
     plot(t.Lraster,ui.LrasterStack+Lstack-1);
     hold on
-    plot(t.Lrasterlight,times.Lrasterlight,'-black', 'LineWidth',8);
+    line([0.5 0.5], [0 length(times.Lrasterlight)], 'Color', 'k', 'LineWidth',2)
+    %     plot(t.Lrasterlight,times.Lrasterlight,'-black', 'LineWidth',8);
     hold off
     ylabel 'trial number';
     xlabel 'time (s)';
     xlim([0 1]);
+
     
 %% Check plot to verify reshape has been applied appropriately to RIGHT data:
 
     figure % creates raster plot
-    plot(t.Rraster,ui.RrasterStack+Rstack);
+    plot(t.Rraster,ui.RrasterStack+Rstack-1);
     hold on
-    plot(t.Rrasterlight, times.Rrasterlight,'-.black');
+    line([0.5 0.5], [0 length(times.Rrasterlight)], 'Color', 'k', 'LineWidth',2)
     hold off
-    ylabel 'trial number'
-    xlabel 'time (s)'    
+    ylabel 'trial number';
+    xlabel 'time (s)';
+    xlim([0 1]);
+       
 %% Lastly, get spike averages for each eye     
      stats.spikes.Laveon = sum(sum(ui.LrasterStack(windowSize:end,:)))/length(times.lLEDstart);
 %     % calculates average number of spikes after light turned on
