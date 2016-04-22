@@ -24,11 +24,17 @@ amp_chan = 1;
 amp_imp = amplifier_channels(1).electrode_impedance_magnitude
 
 for chan = 1 : length(amplifier_channels) 
-   if amplifier_channels(chan).electrode_impedance_magnitude < amp_imp
-       amp_chan = chan;
-   end
+   if amplifier_channels(chan).electrode_impedance_magnitude
+    
+    
 end
     
+    
+amplifier_channels(5).electrode_impedance_magnitude
+amplifier_channels(5).electrode_impedance_magnitude
+amplifier_channels(5).electrode_impedance_magnitude
+amplifier_channels(5).electrode_impedance_magnitude
+
 amplifier_channels(amp_chan) %Channel data is being collected on (on 
 %preamplifier this would be 'A-004'
 %Above command gives data output about the channel on which data is being
@@ -62,7 +68,7 @@ rLED = board_dig_in_data(2,:);
     
     
     %% Setting threshold for spikes and finding light ON times
-threshold = 25;
+threshold = 20;
 Fs =  20000; %amplifier_sample_rate
 windowSize = Fs * 0.05; %creates our time interval by taking the 20k 
 % sampling rate at which the data was collected and converts it to
@@ -77,7 +83,7 @@ windowSize = Fs * 0.05; %creates our time interval by taking the 20k
 
 %% Plot Again with spikes showing & correct time axis now:
 
-time = length(tRat)-1;
+time =length(tRat)-1
 figure % for spike detection
     hold on
     plot(tRat(1:time), ui.ratData(1:time),'blue')
@@ -190,25 +196,24 @@ times
 %% this number needs to be input as last value in reshape function below: 
     
     
-     ui.LrasterStack = reshape(ui.Lraster,20001,length(times.Lrasterlight));
-     ui.RrasterStack = reshape(ui.Rraster,20001,length(times.Rrasterlight));
+     ui.LrasterStack = reshape(ui.Lraster,20001,1);
+     ui.RrasterStack = reshape(ui.Rraster,20001,4);
 %% Check plot to verify reshape has been applied appropriately to LEFT data:
 
     figure % creates raster plot
-    plot(t.Lraster,ui.LrasterStack+Lstack-1);
+    plot(t.Lraster,ui.LrasterStack+Lstack);
     hold on
-    plot(t.Lrasterlight,times.Lrasterlight,'-black', 'LineWidth',8);
+    plot(t.Lrasterlight,times.Lrasterlight,'-.black');
     hold off
-    ylabel 'trial number';
-    xlabel 'time (s)';
-    xlim([0 1]);
+    ylabel 'trial number'
+    xlabel 'time (s)'
     
 %% Check plot to verify reshape has been applied appropriately to RIGHT data:
 
     figure % creates raster plot
     plot(t.Rraster,ui.RrasterStack+Rstack);
     hold on
-    plot(t.Rrasterlight, times.Rrasterlight,'-.black');
+    plot(t.Rrasterlight,times.Rrasterlight,'-.black');
     hold off
     ylabel 'trial number'
     xlabel 'time (s)'    
