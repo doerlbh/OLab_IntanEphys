@@ -237,140 +237,148 @@ for trial = 1 : length(trials)
     %           Need to ask it to count how many times ui.spikes takes place
     %           during each LEDon segment
     
-    %% gets light "on" times into one array
-    times.lLEDstart = times.lLEDon(diff(times.lLEDon)>Fs*0.05);
-    %results in three specific time points for this LED
-    times.rLEDstart = times.rLEDon(diff(times.rLEDon)>Fs*0.05);
-    % this turns the times.xLEDon into a list of the points when the LED turned
-    % on ***Use this for making a raster plot****
-    %results in two specific time points for this LED
-    
-    
-    %% create raster plots-Left Stim
-    % Error: Subscript indices must either be real ve integers or
-    % logicals.
-    for l = 1:length(times.lLEDstart)
-        % collects window of data each time the light stimulus initiated
-        windowSize = round(Fs*0.5); % window size in samples
-        ui.Lrastercell{l} = ui.spikes(times.lLEDstart(l) - windowSize:times.lLEDstart(l) + windowSize);
+    if length(times.lLEDon) == 0 || length(times.rLEDon) == 0
+        disp('WARNING! Failed to detect LED!')
+        disp(filename);
+        disp('---------------------');
+    else
+        
+        %% gets light "on" times into one array
+        times.lLEDstart = times.lLEDon(diff(times.lLEDon)>Fs*0.05);
+        %results in three specific time points for this LED
+        times.rLEDstart = times.rLEDon(diff(times.rLEDon)>Fs*0.05);
+        % this turns the times.xLEDon into a list of the points when the LED turned
+        % on ***Use this for making a raster plot****
+        %results in two specific time points for this LED
+        
+        
+        %% create raster plots-Left Stim
+        % Error: Subscript indices must either be real ve integers or
+        % logicals.
+        for l = 1:length(times.lLEDstart)
+            % collects window of data each time the light stimulus initiated
+            windowSize = round(Fs*0.5); % window size in samples
+            ui.Lrastercell{l} = ui.spikes(times.lLEDstart(l) - windowSize:times.lLEDstart(l) + windowSize);
+        end
+        
+        %In original script, variable that's equivalent to 'times.lLEDon' is e.g.
+        % a 23x1 double that includes only the start times for light turning
+        % on. Maybe be better to use times.lLEDstart?
+        %times.lLedon in this script gives the chunks when led was on, aka a
+        %1x80299 double
+        
+        t.Lraster = transpose((1:length(ui.Lrastercell{1}(:)))/Fs);
+        t.Lraster = repmat(t.Lraster,1,length(times.lLEDstart));
+        % creates time vector for raster
+        
+        times.Lrasterlight = 1:(length(times.lLEDstart));
+        t.Lrasterlight = ones(1,(length(times.lLEDstart)))*windowSize/Fs;
+        % creates dashed line for indicating stim onset on raster plot
+        
+        ui.Lraster = horzcat(ui.Lrastercell{:});
+        % concatenates cell array into a double
+        
+        Lstack = repmat(1:length(times.lLEDstart),length(t.Lraster),1);
+        % creates transform for stacking windowed data for the raster plot
+        
+        
+        %% create raster plots-Right Stim
+        % Error: Subscript indices must either be real ve integers or
+        % logicals.
+        for r = 1:length(times.rLEDstart)
+            % collects window of data each time the light stimulus initiated
+            windowSize = round(Fs*0.5); % window size in samples
+            ui.Rrastercell{r} = ui.spikes(times.rLEDstart(r) - windowSize:times.rLEDstart(r) + windowSize);
+        end
+        
+        
+        t.Rraster = transpose((1:length(ui.Rrastercell{1}(:)))/Fs);
+        t.Rraster = repmat(t.Rraster,1,length(times.rLEDstart));
+        % creates time vector for raster
+        
+        times.Rrasterlight = 1:(length(times.rLEDstart));
+        t.Rrasterlight = ones(1,(length(times.rLEDstart)))*windowSize/Fs;
+        % creates dashed line for indicating stim onset on raster plot
+        
+        ui.Rraster = horzcat(ui.Rrastercell{:});
+        % concatenates cell array into a double
+        
+        Rstack = repmat(1:length(times.rLEDstart),length(t.Rraster),1);
+        % creates transform for stacking windowed data for the raster plot
+        
+        
+        %% Before running next part, need to find how many times light goes on,
+        % do this by checking the variable "times.lLEDstart" and "times.rLEDstart".
+        % It will either show the exact values for the start times or will indicate
+        % how many different light on times there are, if trials exceeds ~5.
+        
+        disp('LED light information: ');
+        times
+        
+        
+        %% this number needs to be input as last value in reshape function below:
+        
+        
+        ui.LrasterStack = reshape(ui.Lraster,20001,length(times.Lrasterlight));
+        ui.RrasterStack = reshape(ui.Rraster,20001,length(times.Rrasterlight));
+        %% Check plot to verify reshape has been applied appropriately to LEFT data:
+        
+        fig2 = figure % creates raster plot
+        %     figure('units','normalized','position',[0 0 1 1]);
+        %     figure('Visible','off');
+        plot(t.Lraster,ui.LrasterStack+Lstack-1);
+        hold on
+        line([0.5 0.5], [0 length(times.Lrasterlight)], 'Color', 'k', 'LineWidth',2)
+        %     plot(t.Lrasterlight,times.Lrasterlight,'-black', 'LineWidth',8);
+        hold off
+        ylabel 'trial number';
+        xlabel 'time (s)';
+        xlim([0 1]);
+        saveas(fig2, strcat(filename, '-Lraster.png'),'png');
+        %     print(fig2, strcat(filename, '-Lraster'),'-dpng');
+        close(fig2);
+        
+        %% Check plot to verify reshape has been applied appropriately to RIGHT data:
+        
+        fig3 = figure % creates raster plot
+        %     figure('units','normalized','position',[0 0 1 1]);
+        %     figure('Visible','off');
+        plot(t.Rraster,ui.RrasterStack+Rstack-1);
+        hold on
+        line([0.5 0.5], [0 length(times.Rrasterlight)], 'Color', 'k', 'LineWidth',2)
+        hold off
+        ylabel 'trial number';
+        xlabel 'time (s)';
+        xlim([0 1]);
+        saveas(fig3, strcat(filename, '-Rraster.png'),'png');
+        %     print(fig3, strcat(filename, '-Rraster'),'-dpng');
+        close(fig3);
+        
+        %% Lastly, get spike averages for each eye
+        stats.spikes.Laveon = sum(sum(ui.LrasterStack(windowSize:end,:)))/length(times.lLEDstart);
+        %     % calculates average number of spikes after light turned on
+        stats.spikes.Laveoff = sum(sum(ui.LrasterStack(1:windowSize,:)))/length(times.lLEDstart);
+        %     % calculates average number of spikes preceding light onset
+        
+        disp('For left eye (L):');
+        disp(strcat('spike average (on):', stats.spikes.Laveon));
+        disp(strcat('spike average (off):', stats.spikes.Laveoff));
+        
+        
+        %% Lastly, get spike avwerages for each eye
+        stats.spikes.Raveon = sum(sum(ui.RrasterStack(windowSize:end,:)))/length(times.rLEDstart);
+        %     % calculates average number of spikes after light turned on
+        stats.spikes.Raveoff = sum(sum(ui.RrasterStack(1:windowSize,:)))/length(times.rLEDstart);
+        %     % calculates average number of spikes preceding light onset
+        
+        disp('For right eye (R):');
+        disp(strcat('spike average (on):', stats.spikes.Raveon));
+        disp(strcat('spike average (off):', stats.spikes.Raveoff));
+        
+        disp(strcat('Finished!!!', filename));
+        disp('--------------------------------');
+        
     end
-    
-    %In original script, variable that's equivalent to 'times.lLEDon' is e.g.
-    % a 23x1 double that includes only the start times for light turning
-    % on. Maybe be better to use times.lLEDstart?
-    %times.lLedon in this script gives the chunks when led was on, aka a
-    %1x80299 double
-    
-    t.Lraster = transpose((1:length(ui.Lrastercell{1}(:)))/Fs);
-    t.Lraster = repmat(t.Lraster,1,length(times.lLEDstart));
-    % creates time vector for raster
-    
-    times.Lrasterlight = 1:(length(times.lLEDstart));
-    t.Lrasterlight = ones(1,(length(times.lLEDstart)))*windowSize/Fs;
-    % creates dashed line for indicating stim onset on raster plot
-    
-    ui.Lraster = horzcat(ui.Lrastercell{:});
-    % concatenates cell array into a double
-    
-    Lstack = repmat(1:length(times.lLEDstart),length(t.Lraster),1);
-    % creates transform for stacking windowed data for the raster plot
-    
-    %% create raster plots-Right Stim
-    % Error: Subscript indices must either be real ve integers or
-    % logicals.
-    for r = 1:length(times.rLEDstart)
-        % collects window of data each time the light stimulus initiated
-        windowSize = round(Fs*0.5); % window size in samples
-        ui.Rrastercell{r} = ui.spikes(times.rLEDstart(r) - windowSize:times.rLEDstart(r) + windowSize);
-    end
-    
-    
-    t.Rraster = transpose((1:length(ui.Rrastercell{1}(:)))/Fs);
-    t.Rraster = repmat(t.Rraster,1,length(times.rLEDstart));
-    % creates time vector for raster
-    
-    times.Rrasterlight = 1:(length(times.rLEDstart));
-    t.Rrasterlight = ones(1,(length(times.rLEDstart)))*windowSize/Fs;
-    % creates dashed line for indicating stim onset on raster plot
-    
-    ui.Rraster = horzcat(ui.Rrastercell{:});
-    % concatenates cell array into a double
-    
-    Rstack = repmat(1:length(times.rLEDstart),length(t.Rraster),1);
-    % creates transform for stacking windowed data for the raster plot
-    
-    
-    %% Before running next part, need to find how many times light goes on,
-    % do this by checking the variable "times.lLEDstart" and "times.rLEDstart".
-    % It will either show the exact values for the start times or will indicate
-    % how many different light on times there are, if trials exceeds ~5.
-    
-    disp('LED light information: ');
-    times
-    
-    
-    %% this number needs to be input as last value in reshape function below:
-    
-    
-    ui.LrasterStack = reshape(ui.Lraster,20001,length(times.Lrasterlight));
-    ui.RrasterStack = reshape(ui.Rraster,20001,length(times.Rrasterlight));
-    %% Check plot to verify reshape has been applied appropriately to LEFT data:
-    
-    fig2 = figure % creates raster plot
-    %     figure('units','normalized','position',[0 0 1 1]);
-    %     figure('Visible','off');
-    plot(t.Lraster,ui.LrasterStack+Lstack-1);
-    hold on
-    line([0.5 0.5], [0 length(times.Lrasterlight)], 'Color', 'k', 'LineWidth',2)
-    %     plot(t.Lrasterlight,times.Lrasterlight,'-black', 'LineWidth',8);
-    hold off
-    ylabel 'trial number';
-    xlabel 'time (s)';
-    xlim([0 1]);
-    saveas(fig2, strcat(filename, '-Lraster.png'),'png');
-    %     print(fig2, strcat(filename, '-Lraster'),'-dpng');
-    close(fig2);
-    
-    %% Check plot to verify reshape has been applied appropriately to RIGHT data:
-    
-    fig3 = figure % creates raster plot
-    %     figure('units','normalized','position',[0 0 1 1]);
-    %     figure('Visible','off');
-    plot(t.Rraster,ui.RrasterStack+Rstack-1);
-    hold on
-    line([0.5 0.5], [0 length(times.Rrasterlight)], 'Color', 'k', 'LineWidth',2)
-    hold off
-    ylabel 'trial number';
-    xlabel 'time (s)';
-    xlim([0 1]);
-    saveas(fig3, strcat(filename, '-Rraster.png'),'png');
-    %     print(fig3, strcat(filename, '-Rraster'),'-dpng');
-    close(fig3);
-    
-    %% Lastly, get spike averages for each eye
-    stats.spikes.Laveon = sum(sum(ui.LrasterStack(windowSize:end,:)))/length(times.lLEDstart);
-    %     % calculates average number of spikes after light turned on
-    stats.spikes.Laveoff = sum(sum(ui.LrasterStack(1:windowSize,:)))/length(times.lLEDstart);
-    %     % calculates average number of spikes preceding light onset
-    
-    disp('For left eye (L):');
-    disp(strcat('spike average (on):', stats.spikes.Laveon));
-    disp(strcat('spike average (off):', stats.spikes.Laveoff));
-    
-    
-    %% Lastly, get spike avwerages for each eye
-    stats.spikes.Raveon = sum(sum(ui.RrasterStack(windowSize:end,:)))/length(times.rLEDstart);
-    %     % calculates average number of spikes after light turned on
-    stats.spikes.Raveoff = sum(sum(ui.RrasterStack(1:windowSize,:)))/length(times.rLEDstart);
-    %     % calculates average number of spikes preceding light onset
-    
-    disp('For right eye (R):');
-    disp(strcat('spike average (on):', stats.spikes.Raveon));
-    disp(strcat('spike average (off):', stats.spikes.Raveoff));
-    
-    disp(strcat('Finished!!!', filename));
-    disp('--------------------------------');
-    
     %%
     
     %     clear all %Starting a new analysis so we want to eliminate all old variables
