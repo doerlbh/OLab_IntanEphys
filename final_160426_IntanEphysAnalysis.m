@@ -1,7 +1,6 @@
 clear all %Starting a new analysis so we want to eliminate all old variables
 close all
 
-diary(strcat('report_', date, '.out'));
 diary on;
 
 %% Begin with opening file to be analyzed
@@ -91,14 +90,21 @@ for trial = 1 : length(trials)
         for ind = 2 : length(index)
             if index{ind} == 1
                 arrange_Intan_RHD(files{ind});
-                amp_data = [amp_data, amplifier_data];
-                ai_data = [ai_data, aux_input_data];
-                bdi_data = [bdi_data, board_dig_in_data];
-                sv_data = [sv_data, supply_voltage_data];
-                t_amp = [t_amp, t_amplifier];
-                t_ai =  [t_ai,t_aux_input];
-                t_d = [t_d, t_dig];
-                t_sv = [t_sv, t_supply_voltage];
+                try
+                    
+                    amp_data = [amp_data, amplifier_data];
+                    ai_data = [ai_data, aux_input_data];
+                    bdi_data = [bdi_data, board_dig_in_data];
+                    sv_data = [sv_data, supply_voltage_data];
+                    t_amp = [t_amp, t_amplifier];
+                    t_ai =  [t_ai,t_aux_input];
+                    t_d = [t_d, t_dig];
+                    t_sv = [t_sv, t_supply_voltage];
+                    
+                    
+                catch exception
+                    
+                end
             end
         end
     end
@@ -358,11 +364,13 @@ for trial = 1 : length(trials)
     disp('--------------------------------');
     
     %%
-%     clear all %Starting a new analysis so we want to eliminate all old variables
+    
+    %     clear all %Starting a new analysis so we want to eliminate all old variables
     close all
     clearvars -except path list files trials trial index;
-
+    
     
 end
 
+diary(strcat('report_', date, '.out'));
 diary off;
