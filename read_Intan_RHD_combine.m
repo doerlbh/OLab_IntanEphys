@@ -49,10 +49,21 @@ trials = unique(trials);
 trials = trials(~cellfun('isempty',trials));
 
 for trial = 1 : length(trials)
+    
     index = strfind(files, trials{trial});
+    amplifier_data
+    aux_input_data
+    board_dig_in_data
+    supply_voltage_data
+    t_amplifier
+    t_aux_input
+    t_dig
+    t_supply_voltage
+    
     for ind = 1 : length(index)
         if index{ind} == 1
             arrange_Intan_RHD(files{ind});
+            
         end
     end
     disp('----------------')
