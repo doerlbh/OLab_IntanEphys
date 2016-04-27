@@ -1,6 +1,9 @@
 clear all %Starting a new analysis so we want to eliminate all old variables
 close all
 
+diary(strcat('report_', date, '.out'));
+diary on;
+
 %% Begin with opening file to be analyzed
 %
 %First we import the data using:
@@ -362,4 +365,4 @@ for trial = 1 : length(trials)
     
 end
 
-
+diary off;
