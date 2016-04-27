@@ -372,5 +372,5 @@ for trial = 1 : length(trials)
     
 end
 
-diary(strcat('report_', date, '.out'));
 diary off;
+diary(strcat('report_', date, '.out'));
