@@ -47,7 +47,6 @@ close all
 % I decided to use automatic method for data collection:
 
 prompt = 'What is your folder?: ';
-disp('e.g.  /Users/DoerLBH/Dropbox/git/OLab_IntanEphys/Data/test');
 path = input(prompt,'s');
 % /Users/DoerLBH/Dropbox/git/OLab_IntanEphys/Data/test
 
@@ -184,7 +183,7 @@ for trial = 1 : length(trials)
     xlabel 'time (s)'
     ylabel 'amplitude (A.U.)'
     legend('Raw Data', 'Spikes', 'Left Eye LED','Right Eye LED')
-        saveas(fig1, strcat(filename, '-spikes.png'),'png');
+        saveas(fig1, strcat(filename, '-Rraster.png'),'png');
     
     
     %% Count spikes during each LED stimulation
