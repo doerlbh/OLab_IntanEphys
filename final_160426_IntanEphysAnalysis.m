@@ -1,10 +1,10 @@
 clear all %Starting a new analysis so we want to eliminate all old variables
 close all
 
- %% Begin with opening file to be analyzed
+%% Begin with opening file to be analyzed
 %
 %First we import the data using:
-%read_Intan_RHD2000_file = Opens the Matlab file browser UI to locate the 
+%read_Intan_RHD2000_file = Opens the Matlab file browser UI to locate the
 %file of interest. Afterward it reads header info and establishes basic
 %variables from the .rhd file
 %
@@ -68,7 +68,8 @@ trials = trials(~cellfun('isempty',trials));
 index = strfind(files, trials{1});
 
 for trial = 1 : length(trials)
-    index = strfind(files, trials{trial});
+    filename = trials{trial};
+    index = strfind(files, filename);
     indexmat = cell2mat(index);
     [~,first,~] = unique(indexmat, 'first');
     arrange_Intan_RHD(files{first(trial)});
@@ -107,73 +108,73 @@ for trial = 1 : length(trials)
     t_dig = t_d;
     t_supply_voltage = t_sv;
     
-    disp('----------------')
-end
-
-
-%check what variables have been imported, especially if youre unsure
-%whether accessory amplifier channels were disabled or not during recording
-%% Establishing some basic variables from values pulled in by above function
-
-amp_chan = 1;
-amp_imp = amplifier_channels(1).electrode_impedance_magnitude
-
-for chan = 1 : length(amplifier_channels) 
-   if amplifier_channels(chan).electrode_impedance_magnitude < amp_imp
-       amp_chan = chan;
-   end
-end
+    %check what variables have been imported, especially if youre unsure
+    %whether accessory amplifier channels were disabled or not during recording
     
-amplifier_channels(amp_chan) %Channel data is being collected on (on 
-%preamplifier this would be 'A-004'
-%Above command gives data output about the channel on which data is being
-%collected
-
-%% Variable name changes below to simplify:
-
-tRat = t_amplifier; %time variable for ephys data
-tLED = t_dig; %time variable for LED data
-ui.ratData = amplifier_data(amp_chan,:);
-lLED = board_dig_in_data(1,:);
-rLED = board_dig_in_data(2,:);
-
-% %% Check variables look right-- plot should be identical to last one
-% figure % for spike detection
-%     hold on
-%     plot(tRat, ui.ratData,'blue')
-%     plot(tLED,lLED,'red')  %max makes red lines continue across top half of vertical axis
-%     plot(tLED,rLED,'green')
-%     xlabel 'time (s)'
-%     ylabel 'amplitude (A.U.)'
-%     legend('Raw Data', 'Left Eye LED','Right Eye LED')
-
-%% filter data
-     Wn = 300/10000;                   % Normalized cutoff frequency        
-    [b,a] = butter(5,Wn,'high');   
+    %% Establishing some basic variables from values pulled in by above function
     
-    ui.ratData = filtfilt(b,a,ui.ratData);  
+    amp_chan = 1;
+    disp('amplifer information');
+    amp_imp = amplifier_channels(1).electrode_impedance_magnitude;
+    
+    for chan = 1 : length(amplifier_channels)
+        if amplifier_channels(chan).electrode_impedance_magnitude < amp_imp
+            amp_chan = chan;
+        end
+    end
+    
+    amplifier_channels(amp_chan)
+    
+    %Channel data is being collected on (on
+    %preamplifier this would be 'A-004'
+    %Above command gives data output about the channel on which data is being
+    %collected
+    
+    %% Variable name changes below to simplify:
+    
+    tRat = t_amplifier; %time variable for ephys data
+    tLED = t_dig; %time variable for LED data
+    ui.ratData = amplifier_data(amp_chan,:);
+    lLED = board_dig_in_data(1,:);
+    rLED = board_dig_in_data(2,:);
+    
+    % %% Check variables look right-- plot should be identical to last one
+    % figure % for spike detection
+    %     hold on
+    %     plot(tRat, ui.ratData,'blue')
+    %     plot(tLED,lLED,'red')  %max makes red lines continue across top half of vertical axis
+    %     plot(tLED,rLED,'green')
+    %     xlabel 'time (s)'
+    %     ylabel 'amplitude (A.U.)'
+    %     legend('Raw Data', 'Left Eye LED','Right Eye LED')
+    
+    %% filter data
+    Wn = 300/10000;                   % Normalized cutoff frequency
+    [b,a] = butter(5,Wn,'high');
+    
+    ui.ratData = filtfilt(b,a,ui.ratData);
     %% invert signal data for thresholding
     ui.ratData = ui.ratData.*(-1);
     
     
     %% Setting threshold for spikes and finding light ON times
-threshold = 25;
-Fs =  20000; %amplifier_sample_rate
-windowSize = Fs * 0.05; %creates our time interval by taking the 20k 
-% sampling rate at which the data was collected and converts it to
-% timestamps collected every millisecond, in other words the value of
-% windowSize is 1 ms.
-
-
-% Finding all spikes in recording:
+    threshold = 25;
+    Fs =  20000; %amplifier_sample_rate
+    windowSize = Fs * 0.05; %creates our time interval by taking the 20k
+    % sampling rate at which the data was collected and converts it to
+    % timestamps collected every millisecond, in other words the value of
+    % windowSize is 1 ms.
+    
+    
+    % Finding all spikes in recording:
     ui.spikes = diff(ui.ratData > threshold) > 0.1;
-
-
-
-%% Plot Again with spikes showing & correct time axis now:
-
-time = length(tRat)-1;
-fig1 = figure % for spike detection
+    
+    
+    
+    %% Plot Again with spikes showing & correct time axis now:
+    
+    time = length(tRat)-1;
+    fig1 = figure % for spike detection
     hold on
     plot(tRat(1:time), ui.ratData(1:time),'blue')
     plot(tRat(1:time), ui.spikes*max(ui.ratData),'black')
@@ -181,56 +182,56 @@ fig1 = figure % for spike detection
     plot(tLED(1:time),rLED(1:time)*80,'red')
     xlabel 'time (s)'
     ylabel 'amplitude (A.U.)'
-    legend('Raw Data', 'Spikes', 'Left Eye LED','Right Eye LED')    
-
-
+    legend('Raw Data', 'Spikes', 'Left Eye LED','Right Eye LED')
     
-%% Count spikes during each LED stimulation
-
- SpikesL = sum(ui.spikes.*lLED(1:end-1))
- SpikesR = sum(ui.spikes.*rLED(1:end-1))   
+    
+    
+    %% Count spikes during each LED stimulation
+    
+    SpikesL = sum(ui.spikes.*lLED(1:end-1))
+    SpikesR = sum(ui.spikes.*rLED(1:end-1))
     
     
     %%   This creates a whole lot of extra light related variables, but unsure if they are actually useful
- 
-     lightstim = 199; %change?
-         ui.leftLEDon = diff(lLED < -lightstim)>0.1;
-         ui.rightLEDon = diff(rLED < -lightstim)>0.1;
-%         times.leftLED = find(leftLED == 500);
-%         times.rightLED = find(rightLED == 500);
-%rewrite:
-times.lLEDon = find(lLED == 1);
-% Gives all time points that left LED is on
+    
+    lightstim = 199; %change?
+    ui.leftLEDon = diff(lLED < -lightstim)>0.1;
+    ui.rightLEDon = diff(rLED < -lightstim)>0.1;
+    %         times.leftLED = find(leftLED == 500);
+    %         times.rightLED = find(rightLED == 500);
+    %rewrite:
+    times.lLEDon = find(lLED == 1);
+    % Gives all time points that left LED is on
     %result is a vector 1 x 80299
-times.lLEDoff = find(lLED == 0);
-% Gives all time points that left LED is off
+    times.lLEDoff = find(lLED == 0);
+    % Gives all time points that left LED is off
     %result is a vector 1 x 1119941
-times.rLEDon = find(rLED == 1);
-times.rLEDoff = find(rLED == 0);
-% the above code will break out the time points when the LED is on for each
-% side and when it is off. Next step: 
-%           Need to ask it to count how many times ui.spikes takes place
-%           during each LEDon segment
-
-%% gets light "on" times into one array
-times.lLEDstart = times.lLEDon(diff(times.lLEDon)>Fs*0.05);
+    times.rLEDon = find(rLED == 1);
+    times.rLEDoff = find(rLED == 0);
+    % the above code will break out the time points when the LED is on for each
+    % side and when it is off. Next step:
+    %           Need to ask it to count how many times ui.spikes takes place
+    %           during each LEDon segment
+    
+    %% gets light "on" times into one array
+    times.lLEDstart = times.lLEDon(diff(times.lLEDon)>Fs*0.05);
     %results in three specific time points for this LED
-times.rLEDstart = times.rLEDon(diff(times.rLEDon)>Fs*0.05);
-% this turns the times.xLEDon into a list of the points when the LED turned
-% on ***Use this for making a raster plot****
+    times.rLEDstart = times.rLEDon(diff(times.rLEDon)>Fs*0.05);
+    % this turns the times.xLEDon into a list of the points when the LED turned
+    % on ***Use this for making a raster plot****
     %results in two specific time points for this LED
-
-
+    
+    
     %% create raster plots-Left Stim
     % Error: Subscript indices must either be real ve integers or
     % logicals.
     for l = 1:length(times.lLEDstart)
         % collects window of data each time the light stimulus initiated
         windowSize = round(Fs*0.5); % window size in samples
-        ui.Lrastercell{l} = ui.spikes(times.lLEDstart(l) - windowSize:times.lLEDstart(l) + windowSize);   
+        ui.Lrastercell{l} = ui.spikes(times.lLEDstart(l) - windowSize:times.lLEDstart(l) + windowSize);
     end
     
-    %In original script, variable that's equivalent to 'times.lLEDon' is e.g. 
+    %In original script, variable that's equivalent to 'times.lLEDon' is e.g.
     % a 23x1 double that includes only the start times for light turning
     % on. Maybe be better to use times.lLEDstart?
     %times.lLedon in this script gives the chunks when led was on, aka a
@@ -244,7 +245,7 @@ times.rLEDstart = times.rLEDon(diff(times.rLEDon)>Fs*0.05);
     t.Lrasterlight = ones(1,(length(times.lLEDstart)))*windowSize/Fs;
     % creates dashed line for indicating stim onset on raster plot
     
-    ui.Lraster = horzcat(ui.Lrastercell{:}); 
+    ui.Lraster = horzcat(ui.Lrastercell{:});
     % concatenates cell array into a double
     
     Lstack = repmat(1:length(times.lLEDstart),length(t.Lraster),1);
@@ -256,9 +257,9 @@ times.rLEDstart = times.rLEDon(diff(times.rLEDon)>Fs*0.05);
     for r = 1:length(times.rLEDstart)
         % collects window of data each time the light stimulus initiated
         windowSize = round(Fs*0.5); % window size in samples
-        ui.Rrastercell{r} = ui.spikes(times.rLEDstart(r) - windowSize:times.rLEDstart(r) + windowSize);   
+        ui.Rrastercell{r} = ui.spikes(times.rLEDstart(r) - windowSize:times.rLEDstart(r) + windowSize);
     end
- 
+    
     
     t.Rraster = transpose((1:length(ui.Rrastercell{1}(:)))/Fs);
     t.Rraster = repmat(t.Rraster,1,length(times.rLEDstart));
@@ -268,27 +269,27 @@ times.rLEDstart = times.rLEDon(diff(times.rLEDon)>Fs*0.05);
     t.Rrasterlight = ones(1,(length(times.rLEDstart)))*windowSize/Fs;
     % creates dashed line for indicating stim onset on raster plot
     
-    ui.Rraster = horzcat(ui.Rrastercell{:}); 
+    ui.Rraster = horzcat(ui.Rrastercell{:});
     % concatenates cell array into a double
     
     Rstack = repmat(1:length(times.rLEDstart),length(t.Rraster),1);
     % creates transform for stacking windowed data for the raster plot
-        
-    
-%% Before running next part, need to find how many times light goes on,
-% do this by checking the variable "times.lLEDstart" and "times.rLEDstart".
-% It will either show the exact values for the start times or will indicate 
-% how many different light on times there are, if trials exceeds ~5.
-times
-
-
-%% this number needs to be input as last value in reshape function below: 
     
     
-     ui.LrasterStack = reshape(ui.Lraster,20001,length(times.Lrasterlight));
-     ui.RrasterStack = reshape(ui.Rraster,20001,length(times.Rrasterlight));
-%% Check plot to verify reshape has been applied appropriately to LEFT data:
-
+    %% Before running next part, need to find how many times light goes on,
+    % do this by checking the variable "times.lLEDstart" and "times.rLEDstart".
+    % It will either show the exact values for the start times or will indicate
+    % how many different light on times there are, if trials exceeds ~5.
+    times
+    
+    
+    %% this number needs to be input as last value in reshape function below:
+    
+    
+    ui.LrasterStack = reshape(ui.Lraster,20001,length(times.Lrasterlight));
+    ui.RrasterStack = reshape(ui.Rraster,20001,length(times.Rrasterlight));
+    %% Check plot to verify reshape has been applied appropriately to LEFT data:
+    
     figure % creates raster plot
     plot(t.Lraster,ui.LrasterStack+Lstack-1);
     hold on
@@ -298,10 +299,10 @@ times
     ylabel 'trial number';
     xlabel 'time (s)';
     xlim([0 1]);
-
     
-%% Check plot to verify reshape has been applied appropriately to RIGHT data:
-
+    
+    %% Check plot to verify reshape has been applied appropriately to RIGHT data:
+    
     figure % creates raster plot
     plot(t.Rraster,ui.RrasterStack+Rstack-1);
     hold on
@@ -310,23 +311,29 @@ times
     ylabel 'trial number';
     xlabel 'time (s)';
     xlim([0 1]);
-       
-%% Lastly, get spike averages for each eye     
-     stats.spikes.Laveon = sum(sum(ui.LrasterStack(windowSize:end,:)))/length(times.lLEDstart);
-%     % calculates average number of spikes after light turned on
-     stats.spikes.Laveoff = sum(sum(ui.LrasterStack(1:windowSize,:)))/length(times.lLEDstart);
-%     % calculates average number of spikes preceding light onset
     
-
-stats.spikes.Laveon
-stats.spikes.Laveoff
-
-%% Lastly, get spike avwerages for each eye     
-     stats.spikes.Raveon = sum(sum(ui.RrasterStack(windowSize:end,:)))/length(times.rLEDstart);
-%     % calculates average number of spikes after light turned on
-     stats.spikes.Raveoff = sum(sum(ui.RrasterStack(1:windowSize,:)))/length(times.rLEDstart);
-%     % calculates average number of spikes preceding light onset
+    %% Lastly, get spike averages for each eye
+    stats.spikes.Laveon = sum(sum(ui.LrasterStack(windowSize:end,:)))/length(times.lLEDstart);
+    %     % calculates average number of spikes after light turned on
+    stats.spikes.Laveoff = sum(sum(ui.LrasterStack(1:windowSize,:)))/length(times.lLEDstart);
+    %     % calculates average number of spikes preceding light onset
     
+    
+    stats.spikes.Laveon
+    stats.spikes.Laveoff
+    
+    %% Lastly, get spike avwerages for each eye
+    stats.spikes.Raveon = sum(sum(ui.RrasterStack(windowSize:end,:)))/length(times.rLEDstart);
+    %     % calculates average number of spikes after light turned on
+    stats.spikes.Raveoff = sum(sum(ui.RrasterStack(1:windowSize,:)))/length(times.rLEDstart);
+    %     % calculates average number of spikes preceding light onset
+    
+    disp('spike average (on):');
+    stats.spikes.Raveon
+    disp('spike average (off):');
+    stats.spikes.Raveoff
+    
+    disp(strcat('----------------', ));
+end
 
-stats.spikes.Raveon
-stats.spikes.Raveoff
+
