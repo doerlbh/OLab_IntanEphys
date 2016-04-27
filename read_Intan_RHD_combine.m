@@ -49,8 +49,11 @@ trials = unique(trials);
 trials = trials(~cellfun('isempty',trials));
 
 for trial = 1 : length(trials)
-    
     index = strfind(files, trials{trial});
+    [~,first,~] = unique(index, 'first');
+    
+    arrange_Intan_RHD(files{1})
+    
     amplifier_data
     aux_input_data
     board_dig_in_data
