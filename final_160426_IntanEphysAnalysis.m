@@ -173,7 +173,7 @@ windowSize = Fs * 0.05; %creates our time interval by taking the 20k
 %% Plot Again with spikes showing & correct time axis now:
 
 time = length(tRat)-1;
-figure % for spike detection
+fig1 = figure % for spike detection
     hold on
     plot(tRat(1:time), ui.ratData(1:time),'blue')
     plot(tRat(1:time), ui.spikes*max(ui.ratData),'black')
