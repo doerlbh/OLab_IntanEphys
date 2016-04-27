@@ -1,7 +1,6 @@
 clear all %Starting a new analysis so we want to eliminate all old variables
 close all
 
-diary on;
 
 %% Begin with opening file to be analyzed
 %
@@ -53,6 +52,10 @@ disp('e.g.  /Users/DoerLBH/Dropbox/git/OLab_IntanEphys/Data/test');
 path = input(prompt,'s');
 % /Users/DoerLBH/Dropbox/git/OLab_IntanEphys/Data/test
 
+diary(strcat(path, 'report_', date, '.out'));
+diary on;
+
+disp(path);
 % So that I can specify a folder to access all data files.
 
 %[status, list] = system('cd path');
@@ -129,6 +132,7 @@ for trial = 1 : length(trials)
     for chan = 1 : length(amplifier_channels)
         if amplifier_channels(chan).electrode_impedance_magnitude < amp_imp
             amp_chan = chan;
+            amp_imp = amplifier_channels(chan).electrode_impedance_magnitude;
         end
     end
     
@@ -144,7 +148,11 @@ for trial = 1 : length(trials)
     
     tRat = t_amplifier; %time variable for ephys data
     tLED = t_dig; %time variable for LED data
-    ui.ratData = amplifier_data(amp_chan,:);
+    try
+        ui.ratData = amplifier_data(amp_chan,:);
+    catch exception
+        ui.ratData = amplifier_data(1,:);
+    end
     lLED = board_dig_in_data(1,:);
     rLED = board_dig_in_data(2,:);
     
@@ -373,4 +381,3 @@ for trial = 1 : length(trials)
 end
 
 diary off;
-diary(strcat('report_', date, '.out'));
