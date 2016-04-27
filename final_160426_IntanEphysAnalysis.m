@@ -176,6 +176,8 @@ for trial = 1 : length(trials)
     
     time = length(tRat)-1;
     fig1 = figure % for spike detection
+    figure('units','normalized','position',[0 0 1 1]);
+    figure('Visible','off');
     hold on
     plot(tRat(1:time), ui.ratData(1:time),'blue')
     plot(tRat(1:time), ui.spikes*max(ui.ratData),'black')
@@ -184,8 +186,8 @@ for trial = 1 : length(trials)
     xlabel 'time (s)'
     ylabel 'amplitude (A.U.)'
     legend('Raw Data', 'Spikes', 'Left Eye LED','Right Eye LED')
-        saveas(fig1, strcat(filename, '-spikes.png'),'png');
-    
+    saveas(fig1, strcat(filename, '-spikes.png'),'png');
+    %     print(fig1, strcat(filename, '-spikes'),'-dpng');
     
     %% Count spikes during each LED stimulation
     
@@ -296,6 +298,8 @@ for trial = 1 : length(trials)
     %% Check plot to verify reshape has been applied appropriately to LEFT data:
     
     fig2 = figure % creates raster plot
+    figure('units','normalized','position',[0 0 1 1]);
+    figure('Visible','off');
     plot(t.Lraster,ui.LrasterStack+Lstack-1);
     hold on
     line([0.5 0.5], [0 length(times.Lrasterlight)], 'Color', 'k', 'LineWidth',2)
@@ -304,11 +308,14 @@ for trial = 1 : length(trials)
     ylabel 'trial number';
     xlabel 'time (s)';
     xlim([0 1]);
-        saveas(fig2, strcat(filename, '-Lraster.png'),'png');
+    saveas(fig2, strcat(filename, '-Lraster.png'),'png');
+    %     print(fig2, strcat(filename, '-Lraster'),'-dpng');
     
     %% Check plot to verify reshape has been applied appropriately to RIGHT data:
     
     fig3 = figure % creates raster plot
+    figure('units','normalized','position',[0 0 1 1]);
+    figure('Visible','off');
     plot(t.Rraster,ui.RrasterStack+Rstack-1);
     hold on
     line([0.5 0.5], [0 length(times.Rrasterlight)], 'Color', 'k', 'LineWidth',2)
@@ -317,6 +324,7 @@ for trial = 1 : length(trials)
     xlabel 'time (s)';
     xlim([0 1]);
     saveas(fig3, strcat(filename, '-Rraster.png'),'png');
+    %     print(fig3, strcat(filename, '-Rraster'),'-dpng');
     
     %% Lastly, get spike averages for each eye
     stats.spikes.Laveon = sum(sum(ui.LrasterStack(windowSize:end,:)))/length(times.lLEDstart);
