@@ -282,6 +282,8 @@ for trial = 1 : length(trials)
     % do this by checking the variable "times.lLEDstart" and "times.rLEDstart".
     % It will either show the exact values for the start times or will indicate
     % how many different light on times there are, if trials exceeds ~5.
+    
+    disp('LED light information: ');
     times
     
     
@@ -292,7 +294,7 @@ for trial = 1 : length(trials)
     ui.RrasterStack = reshape(ui.Rraster,20001,length(times.Rrasterlight));
     %% Check plot to verify reshape has been applied appropriately to LEFT data:
     
-    figure % creates raster plot
+    fig2 = figure % creates raster plot
     plot(t.Lraster,ui.LrasterStack+Lstack-1);
     hold on
     line([0.5 0.5], [0 length(times.Lrasterlight)], 'Color', 'k', 'LineWidth',2)
@@ -305,7 +307,7 @@ for trial = 1 : length(trials)
     
     %% Check plot to verify reshape has been applied appropriately to RIGHT data:
     
-    figure % creates raster plot
+    fig3 = figure % creates raster plot
     plot(t.Rraster,ui.RrasterStack+Rstack-1);
     hold on
     line([0.5 0.5], [0 length(times.Rrasterlight)], 'Color', 'k', 'LineWidth',2)
@@ -320,9 +322,10 @@ for trial = 1 : length(trials)
     stats.spikes.Laveoff = sum(sum(ui.LrasterStack(1:windowSize,:)))/length(times.lLEDstart);
     %     % calculates average number of spikes preceding light onset
     
+    disp('For left eye (L):');
+    disp(strcat('spike average (on):', stats.spikes.Laveon));
+    disp(strcat('spike average (off):', stats.spikes.Laveoff));
     
-    stats.spikes.Laveon
-    stats.spikes.Laveoff
     
     %% Lastly, get spike avwerages for each eye
     stats.spikes.Raveon = sum(sum(ui.RrasterStack(windowSize:end,:)))/length(times.rLEDstart);
@@ -330,12 +333,13 @@ for trial = 1 : length(trials)
     stats.spikes.Raveoff = sum(sum(ui.RrasterStack(1:windowSize,:)))/length(times.rLEDstart);
     %     % calculates average number of spikes preceding light onset
     
-    disp('spike average (on):');
-    stats.spikes.Raveon
-    disp('spike average (off):');
-    stats.spikes.Raveoff
+    disp('For right eye (R):');
+    disp(strcat('spike average (on):', stats.spikes.Raveon));
+    disp(strcat('spike average (off):', stats.spikes.Raveoff));
     
-    disp(strcat('----------------', ));
+    disp(strcat('Finished!!!', filename));
+    disp('--------------------------------');
+    
 end
 
 
