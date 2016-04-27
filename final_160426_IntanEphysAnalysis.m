@@ -114,7 +114,6 @@ for trial = 1 : length(trials)
     %% Establishing some basic variables from values pulled in by above function
     
     amp_chan = 1;
-    disp('amplifer information');
     amp_imp = amplifier_channels(1).electrode_impedance_magnitude;
     
     for chan = 1 : length(amplifier_channels)
@@ -123,6 +122,7 @@ for trial = 1 : length(trials)
         end
     end
     
+    disp('amplifer information');
     amplifier_channels(amp_chan)
     
     %Channel data is being collected on (on
@@ -188,9 +188,11 @@ for trial = 1 : length(trials)
     
     %% Count spikes during each LED stimulation
     
-    SpikesL = sum(ui.spikes.*lLED(1:end-1))
-    SpikesR = sum(ui.spikes.*rLED(1:end-1))
+    SpikesL = sum(ui.spikes.*lLED(1:end-1));
+    SpikesR = sum(ui.spikes.*rLED(1:end-1));
     
+    disp(strcat('spikeL = ', SpikesL));
+    disp(strcat('spikeR = ', SpikesR));
     
     %%   This creates a whole lot of extra light related variables, but unsure if they are actually useful
     
