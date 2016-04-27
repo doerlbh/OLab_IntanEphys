@@ -73,7 +73,7 @@ for trial = 1 : length(trials)
     index = strfind(files, filename);
     indexmat = cell2mat(index);
     [~,first,~] = unique(indexmat, 'first');
-    arrange_Intan_RHD(files{first(trial)});
+    arrange_Intan_RHD(files{first(1)});
     
     amp_data = amplifier_data;
     ai_data = aux_input_data;
@@ -175,19 +175,21 @@ for trial = 1 : length(trials)
     %% Plot Again with spikes showing & correct time axis now:
     
     time = length(tRat)-1;
-    fig1 = figure % for spike detection
-    figure('units','normalized','position',[0 0 1 1]);
-    figure('Visible','off');
+    fig1 = figure; % for spike detection
+    %     figure('units','normalized','position',[0 0 1 1]);
+    %     figure('Visible','off');
     hold on
-    plot(tRat(1:time), ui.ratData(1:time),'blue')
-    plot(tRat(1:time), ui.spikes*max(ui.ratData),'black')
-    plot(tLED(1:time),lLED(1:time)*80,'green')  %max makes red lines continue across top half of vertical axis
-    plot(tLED(1:time),rLED(1:time)*80,'red')
-    xlabel 'time (s)'
-    ylabel 'amplitude (A.U.)'
-    legend('Raw Data', 'Spikes', 'Left Eye LED','Right Eye LED')
+    plot(tRat(1:time), ui.ratData(1:time),'blue');
+    plot(tRat(1:time), ui.spikes*max(ui.ratData),'black');
+    plot(tLED(1:time),lLED(1:time)*80,'green');  %max makes red lines continue across top half of vertical axis
+    plot(tLED(1:time),rLED(1:time)*80,'red');
+    xlabel 'time (s)';
+    ylabel 'amplitude (A.U.)';
+    legend('Raw Data', 'Spikes', 'Left Eye LED','Right Eye LED');
+    %     set(fig1, 'Position', [100, 100, 1920, 1080]);
     saveas(fig1, strcat(filename, '-spikes.png'),'png');
     %     print(fig1, strcat(filename, '-spikes'),'-dpng');
+    close(fig1);
     
     %% Count spikes during each LED stimulation
     
@@ -298,8 +300,8 @@ for trial = 1 : length(trials)
     %% Check plot to verify reshape has been applied appropriately to LEFT data:
     
     fig2 = figure % creates raster plot
-    figure('units','normalized','position',[0 0 1 1]);
-    figure('Visible','off');
+    %     figure('units','normalized','position',[0 0 1 1]);
+    %     figure('Visible','off');
     plot(t.Lraster,ui.LrasterStack+Lstack-1);
     hold on
     line([0.5 0.5], [0 length(times.Lrasterlight)], 'Color', 'k', 'LineWidth',2)
@@ -310,12 +312,13 @@ for trial = 1 : length(trials)
     xlim([0 1]);
     saveas(fig2, strcat(filename, '-Lraster.png'),'png');
     %     print(fig2, strcat(filename, '-Lraster'),'-dpng');
+    close(fig2);
     
     %% Check plot to verify reshape has been applied appropriately to RIGHT data:
     
     fig3 = figure % creates raster plot
-    figure('units','normalized','position',[0 0 1 1]);
-    figure('Visible','off');
+    %     figure('units','normalized','position',[0 0 1 1]);
+    %     figure('Visible','off');
     plot(t.Rraster,ui.RrasterStack+Rstack-1);
     hold on
     line([0.5 0.5], [0 length(times.Rrasterlight)], 'Color', 'k', 'LineWidth',2)
@@ -325,6 +328,7 @@ for trial = 1 : length(trials)
     xlim([0 1]);
     saveas(fig3, strcat(filename, '-Rraster.png'),'png');
     %     print(fig3, strcat(filename, '-Rraster'),'-dpng');
+    close(fig3);
     
     %% Lastly, get spike averages for each eye
     stats.spikes.Laveon = sum(sum(ui.LrasterStack(windowSize:end,:)))/length(times.lLEDstart);
@@ -349,6 +353,12 @@ for trial = 1 : length(trials)
     
     disp(strcat('Finished!!!', filename));
     disp('--------------------------------');
+    
+    %%
+%     clear all %Starting a new analysis so we want to eliminate all old variables
+    close all
+    clearvars -except path list files trials trial index;
+
     
 end
 
