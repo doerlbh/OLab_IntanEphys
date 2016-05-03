@@ -68,8 +68,12 @@ disp(date);
 
 warning('off','MATLAB:xlswrite:AddSheet');
 xlsfile = strcat(path, '/report-', date, '.xlsx');
+mycell = {'Excel'};
+xlswrite(xlsfile,mycell);
 % rpt = {strcat('report-', date, ' by Baihan Lin')};
 % xlswrite(xlsfile, rpt(1),'Report','A1');
+
+
 
 files = strsplit(list);
 length(files);
