@@ -68,12 +68,12 @@ diary on;
 disp(path);
 disp(date);
 
-warning('off','MATLAB:xlswrite:AddSheet');
-xlsfile = strcat(path, '/report-', date, '.xlsx');
-mycell = {'Excel'};
-xlswrite(xlsfile,mycell);
-% rpt = {strcat('report-', date, ' by Baihan Lin')};
-% xlswrite(xlsfile, rpt(1),'Report','A1');
+% warning('off','MATLAB:xlswrite:AddSheet');
+% xlsfile = strcat(path, '/report-', date, '.xlsx');
+% mycell = {'Excel'};
+% xlswrite(xlsfile,mycell);
+% % rpt = {strcat('report-', date, ' by Baihan Lin')};
+% % xlswrite(xlsfile, rpt(1),'Report','A1');
 
 
 
@@ -91,8 +91,9 @@ index = strfind(files, trials{1});
 
 for trial = 1 : length(trials)
     filename = trials{trial};
-    last = strfind(filename,'/')
-    disp(filename);
+    indexsep = strfind(filename,'/');
+    last = indexsep(end);
+    disp(filename(last+1:end));
     index = strfind(files, filename);
     indexmat = cell2mat(index);
     [~,first,~] = unique(indexmat, 'first');
@@ -245,9 +246,10 @@ for trial = 1 : length(trials)
     %% Count spikes during each LED stimulation
     
     try
-        SpikesL = sum(ui.spikes.*lLED(1:end-1))
-        SpikesR = sum(ui.spikes.*rLED(1:end-1))
-        
+        SpikesL = sum(ui.spikes.*lLED(1:end-1));
+        SpikesR = sum(ui.spikes.*rLED(1:end-1));
+        disp(SpikesL);
+        disp(SpikesR);
 %         disp(strcat('SpikeL = ', SpikesL));
 %         disp(strcat('SpikeR = ', SpikesR));
     catch
@@ -355,8 +357,10 @@ for trial = 1 : length(trials)
             
 %             disp('LED light information: ');
 %             times
-            LLEDtime = times.Lrasterlight(end)
-            RLEDtime = times.Rrasterlight(end)
+            LLEDtime = times.Lrasterlight(end);
+            RLEDtime = times.Rrasterlight(end);
+            disp(LLEDtime);
+            disp(RLEDtime);
             
             %% this number needs to be input as last value in reshape function below:
             
@@ -405,8 +409,10 @@ for trial = 1 : length(trials)
 %             disp('For left eye (L):');
 %             disp(strcat('spike average (on):', stats.spikes.Laveon));
 %             disp(strcat('spike average (off):', stats.spikes.Laveoff));
-            LSpikeOn = stats.spikes.Laveon
-            LSpikeOff = stats.spikes.Laveoff
+            LSpikeOn = stats.spikes.Laveon;
+            LSpikeOff = stats.spikes.Laveoff;
+            disp(LSpikeOn);
+            disp(LSpikeOff);
             
             %% Lastly, get spike avwerages for each eye
             stats.spikes.Raveon = sum(sum(ui.RrasterStack(windowSize:end,:)))/length(times.rLEDstart);
@@ -417,10 +423,13 @@ for trial = 1 : length(trials)
 %             disp('For right eye (R):');
 %             disp(strcat('spike average (on):', stats.spikes.Raveon));
 %             disp(strcat('spike average (off):', stats.spikes.Raveoff));
-            RSpikeOn = stats.spikes.Raveon
-            RSpikeOff = stats.spikes.Raveoff
+            RSpikeOn = stats.spikes.Raveon;
+            RSpikeOff = stats.spikes.Raveoff;
+            disp(RSpikeOn);
+            disp(RSpikeOff);
             
 %             disp(strcat('Finished!!!', filename));
+%             disp(strcat(SpikesL, SpikesR, LLEDtime, RLEDtime, LSpikeOn, LSpikeOff, RSpikeOn, RSpikeOff));
             disp('Finished !!! --------------------------------');
             
         end
