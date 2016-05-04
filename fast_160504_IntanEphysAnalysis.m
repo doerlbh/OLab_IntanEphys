@@ -1,5 +1,5 @@
 % Modified by Baihan Lin
-% to extract information from Intan Tech recording data
+% to analyze the extracted information from Intan Tech recording data
 % Apr 2016
 
 clear all %Starting a new analysis so we want to eliminate all old variables
@@ -21,8 +21,6 @@ close all
 % command before running this program to clear all other variables from the
 % base workspace.
 
-% Modified by Baihan Lin
-% Apr 2016
 
 % read_Intan_RHD2000_file_combine
 %
@@ -62,13 +60,22 @@ path = input(prompt,'s');
 
 [~,list] = system(['find ' path ' -type f -name "*.rhd"']);
 
-system(['mkdir output-' date]);
-system(['cd output-' date]);
+system(['mkdir ' path '/output-' date]);
+system(['cd ' path '/output-' date]);
 
-diary(strcat(path, 'report_', date, '.out'));
+diary(strcat(path, '/output-', date, '/report_', date, '.out'));
 diary on;
 disp(path);
 disp(date);
+
+warning('off','MATLAB:xlswrite:AddSheet');
+xlsfile = strcat(path, '/report-', date, '.xlsx');
+mycell = {'Excel'};
+xlswrite(xlsfile,mycell);
+% rpt = {strcat('report-', date, ' by Baihan Lin')};
+% xlswrite(xlsfile, rpt(1),'Report','A1');
+
+
 
 files = strsplit(list);
 length(files);
@@ -87,7 +94,7 @@ for trial = 1 : length(trials)
     index = strfind(files, filename);
     indexmat = cell2mat(index);
     [~,first,~] = unique(indexmat, 'first');
-    arrange_Intan_RHD(files{first(1)});
+    fast_arrange_Intan_RHD(files{first(1)});
     
     amp_data = amplifier_data;
     try
@@ -424,5 +431,7 @@ for trial = 1 : length(trials)
     
     
 end
+
+system(['cd ' path '/output-' date]);
 
 diary off;

@@ -1,3 +1,7 @@
+% Modified by Baihan Lin
+% to analyze the extracted information from Intan Tech recording data
+% Apr 2016
+
 clear all %Starting a new analysis so we want to eliminate all old variables
 close all
 
@@ -17,8 +21,6 @@ close all
 % command before running this program to clear all other variables from the
 % base workspace.
 
-% Modified by Baihan Lin
-% Apr 2016
 
 % read_Intan_RHD2000_file_combine
 %
