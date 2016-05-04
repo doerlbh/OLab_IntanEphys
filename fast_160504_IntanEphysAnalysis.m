@@ -161,7 +161,7 @@ for trial = 1 : length(trials)
         end
     end
     
-%     disp('amplifer information');
+    %     disp('amplifer information');
     amplifier_channels(amp_chan);
     
     %Channel data is being collected on (on
@@ -250,9 +250,11 @@ for trial = 1 : length(trials)
         SpikesR = sum(ui.spikes.*rLED(1:end-1));
         disp(SpikesL);
         disp(SpikesR);
-%         disp(strcat('SpikeL = ', SpikesL));
-%         disp(strcat('SpikeR = ', SpikesR));
+        %         disp(strcat('SpikeL = ', SpikesL));
+        %         disp(strcat('SpikeR = ', SpikesR));
     catch
+        disp('SpikesL_N/A');
+        disp('SpikesR_N/A');
     end
     
     %%   This creates a whole lot of extra light related variables, but unsure if they are actually useful
@@ -282,7 +284,7 @@ for trial = 1 : length(trials)
     
     try
         if length(times.lLEDon) == 0 || length(times.rLEDon) == 0
-            disp('WARNING! Failed to detect LED!')
+            disp('WARNING!_Failed_to_detect_LED!')
             disp(filename);
             disp('---------------------');
         else
@@ -355,8 +357,8 @@ for trial = 1 : length(trials)
             % It will either show the exact values for the start times or will indicate
             % how many different light on times there are, if trials exceeds ~5.
             
-%             disp('LED light information: ');
-%             times
+            %             disp('LED light information: ');
+            %             times
             LLEDtime = times.Lrasterlight(end);
             RLEDtime = times.Rrasterlight(end);
             disp(LLEDtime);
@@ -406,9 +408,9 @@ for trial = 1 : length(trials)
             stats.spikes.Laveoff = sum(sum(ui.LrasterStack(1:windowSize,:)))/length(times.lLEDstart);
             %     % calculates average number of spikes preceding light onset
             
-%             disp('For left eye (L):');
-%             disp(strcat('spike average (on):', stats.spikes.Laveon));
-%             disp(strcat('spike average (off):', stats.spikes.Laveoff));
+            %             disp('For left eye (L):');
+            %             disp(strcat('spike average (on):', stats.spikes.Laveon));
+            %             disp(strcat('spike average (off):', stats.spikes.Laveoff));
             LSpikeOn = stats.spikes.Laveon;
             LSpikeOff = stats.spikes.Laveoff;
             disp(LSpikeOn);
@@ -419,18 +421,18 @@ for trial = 1 : length(trials)
             %     % calculates average number of spikes after light turned on
             stats.spikes.Raveoff = sum(sum(ui.RrasterStack(1:windowSize,:)))/length(times.rLEDstart);
             %     % calculates average number of spikes preceding light onset
-%             
-%             disp('For right eye (R):');
-%             disp(strcat('spike average (on):', stats.spikes.Raveon));
-%             disp(strcat('spike average (off):', stats.spikes.Raveoff));
+            %
+            %             disp('For right eye (R):');
+            %             disp(strcat('spike average (on):', stats.spikes.Raveon));
+            %             disp(strcat('spike average (off):', stats.spikes.Raveoff));
             RSpikeOn = stats.spikes.Raveon;
             RSpikeOff = stats.spikes.Raveoff;
             disp(RSpikeOn);
             disp(RSpikeOff);
             
-%             disp(strcat('Finished!!!', filename));
-%             disp(strcat(SpikesL, SpikesR, LLEDtime, RLEDtime, LSpikeOn, LSpikeOff, RSpikeOn, RSpikeOff));
-            disp('Finished !!! --------------------------------');
+            %             disp(strcat('Finished!!!', filename));
+            %             disp(strcat(SpikesL, SpikesR, LLEDtime, RLEDtime, LSpikeOn, LSpikeOff, RSpikeOn, RSpikeOff));
+            disp('---------------------');
             
         end
     catch
