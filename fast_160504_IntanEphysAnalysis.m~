@@ -91,8 +91,6 @@ index = strfind(files, trials{1});
 
 for trial = 1 : length(trials)
     filename = trials{trial};
-    last = strfind(filename,'/')
-    disp(filename);
     index = strfind(files, filename);
     indexmat = cell2mat(index);
     [~,first,~] = unique(indexmat, 'first');
@@ -355,8 +353,8 @@ for trial = 1 : length(trials)
             
 %             disp('LED light information: ');
 %             times
-            LLEDtime = times.Lrasterlight(end)
-            RLEDtime = times.Rrasterlight(end)
+            times.Lrasterlight(end)
+            times.Rrasterlight(end)
             
             %% this number needs to be input as last value in reshape function below:
             
@@ -402,26 +400,24 @@ for trial = 1 : length(trials)
             stats.spikes.Laveoff = sum(sum(ui.LrasterStack(1:windowSize,:)))/length(times.lLEDstart);
             %     % calculates average number of spikes preceding light onset
             
-%             disp('For left eye (L):');
-%             disp(strcat('spike average (on):', stats.spikes.Laveon));
-%             disp(strcat('spike average (off):', stats.spikes.Laveoff));
-            LSpikeOn = stats.spikes.Laveon
-            LSpikeOff = stats.spikes.Laveoff
+            disp('For left eye (L):');
+            disp(strcat('spike average (on):', stats.spikes.Laveon));
+            disp(strcat('spike average (off):', stats.spikes.Laveoff));
+            
             
             %% Lastly, get spike avwerages for each eye
             stats.spikes.Raveon = sum(sum(ui.RrasterStack(windowSize:end,:)))/length(times.rLEDstart);
             %     % calculates average number of spikes after light turned on
             stats.spikes.Raveoff = sum(sum(ui.RrasterStack(1:windowSize,:)))/length(times.rLEDstart);
             %     % calculates average number of spikes preceding light onset
-%             
-%             disp('For right eye (R):');
-%             disp(strcat('spike average (on):', stats.spikes.Raveon));
-%             disp(strcat('spike average (off):', stats.spikes.Raveoff));
-            RSpikeOn = stats.spikes.Raveon
-            RSpikeOff = stats.spikes.Raveoff
             
-%             disp(strcat('Finished!!!', filename));
-            disp('Finished !!! --------------------------------');
+            disp('For right eye (R):');
+            disp(strcat('spike average (on):', 
+            stats.spikes.Raveon
+            disp(strcat('spike average (off):', stats.spikes.Raveoff));
+            
+            disp(strcat('Finished!!!', filename));
+            disp('--------------------------------');
             
         end
     catch
