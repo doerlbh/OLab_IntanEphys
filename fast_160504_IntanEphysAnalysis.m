@@ -93,7 +93,7 @@ for trial = 1 : length(trials)
     filename = trials{trial};
     indexsep = strfind(filename,'/');
     last = indexsep(end);
-    disp(filename(last+1:end));
+   
     index = strfind(files, filename);
     indexmat = cell2mat(index);
     [~,first,~] = unique(indexmat, 'first');
@@ -107,7 +107,13 @@ for trial = 1 : length(trials)
         t_ai = t_aux_input;
         t_d = t_dig;
         t_sv = t_supply_voltage;
+        disp('---------------------');
+        disp(filename(last+1:end));
+        disp('normal');
     catch exception
+        disp('---------------------');
+         disp(filename(last+1:end));
+         disp('Fail_to_record_all?')
     end
     t_amp = t_amplifier;
     
@@ -245,17 +251,17 @@ for trial = 1 : length(trials)
     
     %% Count spikes during each LED stimulation
     
-    try
-        SpikesL = sum(ui.spikes.*lLED(1:end-1));
-        SpikesR = sum(ui.spikes.*rLED(1:end-1));
-        disp(SpikesL);
-        disp(SpikesR);
-        %         disp(strcat('SpikeL = ', SpikesL));
-        %         disp(strcat('SpikeR = ', SpikesR));
-    catch
-        disp('SpikesL_N/A');
-        disp('SpikesR_N/A');
-    end
+%     try
+%         SpikesL = sum(ui.spikes.*lLED(1:end-1));
+%         SpikesR = sum(ui.spikes.*rLED(1:end-1));
+%         disp(SpikesL);
+%         disp(SpikesR);
+%         %         disp(strcat('SpikeL = ', SpikesL));
+%         %         disp(strcat('SpikeR = ', SpikesR));
+%     catch
+%         disp('SpikesL_N/A');
+%         disp('SpikesR_N/A');
+%     end
     
     %%   This creates a whole lot of extra light related variables, but unsure if they are actually useful
     
