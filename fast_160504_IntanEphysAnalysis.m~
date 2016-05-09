@@ -104,33 +104,24 @@ for trial = 1 : length(trials)
     try
         ai_data = aux_input_data;
     catch exception
-        disp('bad_ai_intialization');
+        disp('bad_ai_intialization')
     end
     try
-        bdi_data = board_dig_in_data;
+    bdi_data = board_dig_in_data;
     catch exception
-        disp('bad_bdi_initialization');
+        disp('bad_bdi_initialization')
     end
     try
         sv_data = supply_voltage_data;
     catch exception
-        disp('bad_sv_initialization');
+        disp('bad_sv_initialization')
     end
     try
         t_ai = t_aux_input;
     catch exception
         disp('bad_t_ai_initialzation');
-    end
-    try
-        t_d = t_dig;
-    catch exception
-        disp('bad_t_dig_initialization');
-    end
-    try
-        t_sv = t_supply_voltage;
-    catch exception
-        disp('bad_t_sv_initialization');
-    end
+    t_d = t_dig;
+    t_sv = t_supply_voltage;
     disp('---------------------');
     disp('normal');
     %     catch exception
