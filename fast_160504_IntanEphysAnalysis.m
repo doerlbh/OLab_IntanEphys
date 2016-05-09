@@ -100,7 +100,7 @@ for trial = 1 : length(trials)
     fast_arrange_Intan_RHD(files{first(1)});
     
     amp_data = amplifier_data;
-    try
+%     try
         ai_data = aux_input_data;
         bdi_data = board_dig_in_data;
         sv_data = supply_voltage_data;
@@ -110,11 +110,11 @@ for trial = 1 : length(trials)
         disp('---------------------');
         disp(filename(last+1:end));
         disp('normal');
-    catch exception
-        disp('---------------------');
-         disp(filename(last+1:end));
-         disp('Fail_to_record_all?')
-    end
+%     catch exception
+%         disp('---------------------');
+%          disp(filename(last+1:end));
+%          disp('Fail_to_record_all?')
+%     end
     t_amp = t_amplifier;
     
     if length(index) > 1
