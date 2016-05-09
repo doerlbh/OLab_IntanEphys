@@ -100,20 +100,23 @@ for trial = 1 : length(trials)
     fast_arrange_Intan_RHD(files{first(1)});
     
     amp_data = amplifier_data;
-%     try
+    disp(filename(last+1:end));
+    try
         ai_data = aux_input_data;
+        catch exception
+        disp('bad_ai_intialization')
+    end
         bdi_data = board_dig_in_data;
         sv_data = supply_voltage_data;
         t_ai = t_aux_input;
         t_d = t_dig;
         t_sv = t_supply_voltage;
         disp('---------------------');
-        disp(filename(last+1:end));
         disp('normal');
 %     catch exception
 %         disp('---------------------');
 %          disp(filename(last+1:end));
-%          disp('Fail_to_record_all?')
+%          disp('Fail_to_initialize')
 %     end
     t_amp = t_amplifier;
     
@@ -134,7 +137,7 @@ for trial = 1 : length(trials)
                     
                     
                 catch exception
-                    
+                    disp('fail_to_reassign_1')
                 end
             end
         end
@@ -150,6 +153,7 @@ for trial = 1 : length(trials)
         t_dig = t_d;
         t_supply_voltage = t_sv;
     catch
+        disp('fail_to_reassign_2');
     end
     
     %check what variables have been imported, especially if youre unsure

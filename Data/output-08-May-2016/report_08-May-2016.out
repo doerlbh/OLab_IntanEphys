@@ -420,3 +420,39 @@ Fail_to_record_all?
 ---------------------
 albino-012816-S1_160128
 Fail_to_record_all?
+/Users/DoerLBH/Dropbox/git/OLab_IntanEphys/Data
+08-May-2016
+{Undefined function or variable 'aux_input_data'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('fast_160504_IntanEphysAnalysis', '/Users/DoerLBH/Dropbox/git/OLab_IntanEphys/fast_160504_IntanEphysAnalysis.m', 104)" style="font-weight:bold">fast_160504_IntanEphysAnalysis</a> (<a href="matlab: opentoline('/Users/DoerLBH/Dropbox/git/OLab_IntanEphys/fast_160504_IntanEphysAnalysis.m',104,0)">line 104</a>)
+        ai_data = aux_input_data;
+} 
+opentoline('/Users/DoerLBH/Dropbox/git/OLab_IntanEphys/fast_160504_IntanEphysAnalysis.m',104,0)
+fast_160504_IntanEphysAnalysis
+e.g.  /Users/DoerLBH/Dropbox/git/OLab_IntanEphys/Data
+What is your folder?: /Users/DoerLBH/Dropbox/git/OLab_IntanEphys/Data
+mkdir: /Users/DoerLBH/Dropbox/git/OLab_IntanEphys/Data/output-08-May-2016: File exists
+/Users/DoerLBH/Dropbox/git/OLab_IntanEphys/Data
+08-May-2016
+bad_ai_intialization
+{Undefined function or variable 'board_dig_in_data'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('fast_160504_IntanEphysAnalysis', '/Users/DoerLBH/Dropbox/git/OLab_IntanEphys/fast_160504_IntanEphysAnalysis.m', 108)" style="font-weight:bold">fast_160504_IntanEphysAnalysis</a> (<a href="matlab: opentoline('/Users/DoerLBH/Dropbox/git/OLab_IntanEphys/fast_160504_IntanEphysAnalysis.m',108,0)">line 108</a>)
+        bdi_data = board_dig_in_data;
+} 
+fast_160504_IntanEphysAnalysis
+e.g.  /Users/DoerLBH/Dropbox/git/OLab_IntanEphys/Data
+What is your folder?: /Users/DoerLBH/Dropbox/git/OLab_IntanEphys/Data
+mkdir: /Users/DoerLBH/Dropbox/git/OLab_IntanEphys/Data/output-08-May-2016: File exists
+/Users/DoerLBH/Dropbox/git/OLab_IntanEphys/Data
+08-May-2016
+MD-011216_160112
+bad_ai_intialization
+{Undefined function or variable 'board_dig_in_data'.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('fast_160504_IntanEphysAnalysis', '/Users/DoerLBH/Dropbox/git/OLab_IntanEphys/fast_160504_IntanEphysAnalysis.m', 109)" style="font-weight:bold">fast_160504_IntanEphysAnalysis</a> (<a href="matlab: opentoline('/Users/DoerLBH/Dropbox/git/OLab_IntanEphys/fast_160504_IntanEphysAnalysis.m',109,0)">line 109</a>)
+        bdi_data = board_dig_in_data;
+} 
+fast_160504_IntanEphysAnalysis
+e.g.  /Users/DoerLBH/Dropbox/git/OLab_IntanEphys/Data
+What is your folder?: /Users/DoerLBH/Dropbox/git/OLab_IntanEphys/Data/albino-012816
