@@ -305,8 +305,8 @@ if (data_present)
     board_dig_in_index = 1;
     board_dig_out_index = 1;
 
-%     print_increment = 10;
-%     percent_done = print_increment;
+    print_increment = 10;
+    percent_done = print_increment;
     for i=1:num_data_blocks
         % In version 1.2, we moved from saving timestamps as unsigned
         % integeters to signed integers to accomidate negative (adjusted)
@@ -346,11 +346,11 @@ if (data_present)
         board_dig_in_index = board_dig_in_index + 60;
         board_dig_out_index = board_dig_out_index + 60;
 
-%         fraction_done = 100 * (i / num_data_blocks);
-%         if (fraction_done >= percent_done)
+        fraction_done = 100 * (i / num_data_blocks);
+        if (fraction_done >= percent_done)
 %             fprintf(1, '%d%% done...\n', percent_done);
-%             percent_done = percent_done + print_increment;
-%         end
+            percent_done = percent_done + print_increment;
+        end
     end
 
     % Make sure we have read exactly the right amount of data.
@@ -411,17 +411,17 @@ if (data_present)
     if (notch_filter_frequency > 0)
 %         fprintf(1, 'Applying notch filter...\n');
 
-%         print_increment = 10;
-%         percent_done = print_increment;
+        print_increment = 10;
+        percent_done = print_increment;
         for i=1:num_amplifier_channels
             amplifier_data(i,:) = ...
                 notch_filter(amplifier_data(i,:), sample_rate, notch_filter_frequency, 10);
 
-%             fraction_done = 100 * (i / num_amplifier_channels);
-%             if (fraction_done >= percent_done)
+            fraction_done = 100 * (i / num_amplifier_channels);
+            if (fraction_done >= percent_done)
 %                 fprintf(1, '%d%% done...\n', percent_done);
-%                 percent_done = percent_done + print_increment;
-%             end
+                percent_done = percent_done + print_increment;
+            end
 
         end
     end
