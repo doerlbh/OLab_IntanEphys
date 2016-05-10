@@ -295,7 +295,7 @@ for trial = 1 : length(trials)
         legend('Raw Data', 'Spikes', 'Left Eye LED','Right Eye LED');
         title(strcat(casename, ' spikes plot'));
         %     set(fig1, 'Position', [100, 100, 1920, 1080]);
-        saveas(fig1, strcat(casename, '-spikes.png'),'png');
+        saveas(fig1, strcat(path, '/', casename, '-spikes.png'),'png');
         %     print(fig1, strcat(filename, '-spikes'),'-dpng');
         close(fig1);
     catch
@@ -442,7 +442,7 @@ for trial = 1 : length(trials)
             xlim([0 1]);
             %             ylim([0:1:LLEDtime]);
             title(strcat(casename, ' Lraster plot'));
-            saveas(fig2, strcat(casename, '-Lraster.png'),'png');
+            saveas(fig2, strcat(path, '/', casename, '-Lraster.png'),'png');
             %     print(fig2, strcat(filename, '-Lraster'),'-dpng');
             close(fig2);
             
@@ -460,7 +460,7 @@ for trial = 1 : length(trials)
             xlim([0 1]);
             %             ylim([0:1:LLEDtime]);
             title(strcat(casename, ' Rraster plot'));
-            saveas(fig3, strcat(casename, '-Rraster.png'),'png');
+            saveas(fig3, strcat(path, '/', casename, '-Rraster.png'),'png');
             %     print(fig3, strcat(filename, '-Rraster'),'-dpng');
             close(fig3);
             
