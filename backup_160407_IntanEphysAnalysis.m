@@ -1,4 +1,7 @@
- %% Begin with opening file to be analyzed
+% Debugged and Modifidied by Baihan Lin, Olavarria Lab
+% April 2016
+
+%% Begin with opening file to be analyzed
 clear all %Starting a new analysis so we want to eliminate all old variables
 close all
 %

@@ -413,7 +413,8 @@ for trial = 1 : length(trials)
             ylabel 'trial number';
             xlabel 'time (s)';
             xlim([0 1]);
-            title(strcat(filename(last+1:end), ' Lraster plot'));
+            ylim([0:1:LLEDtime]);
+            title(strcat(strtok(filename(last+1:end),'_'), ' Lraster plot'));
             saveas(fig2, strcat(filename, '-Lraster.png'),'png');
             %     print(fig2, strcat(filename, '-Lraster'),'-dpng');
             close(fig2);
@@ -430,7 +431,8 @@ for trial = 1 : length(trials)
             ylabel 'trial number';
             xlabel 'time (s)';
             xlim([0 1]);
-            title(strcat(filename(last+1:end), ' Rraster plot'));
+            ylim([0:1:LLEDtime]);
+            title(strcat(strtok(filename(last+1:end),'_'), ' Rraster plot'));
             saveas(fig3, strcat(trial, '-Rraster.png'),'png');
             %     print(fig3, strcat(filename, '-Rraster'),'-dpng');
             close(fig3);
