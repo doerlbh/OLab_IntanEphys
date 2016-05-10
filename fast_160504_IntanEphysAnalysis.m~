@@ -148,43 +148,35 @@ for trial = 1 : length(trials)
                 fast_arrange_Intan_RHD(files{ind});
                 try
                     amp_data = [amp_data, amplifier_data];
-                catch exception
-                    disp('fail_to_reassign_amp_1')
+                    catch exception
+                    disp('fail_to_reassign_1')
                 end
                 try
                     ai_data = [ai_data, aux_input_data];
                 catch exception
-                    disp('fail_to_reassign_ai_1')
+                    disp('fail_to_reassign_1')
                 end
                 try
                     bdi_data = [bdi_data, board_dig_in_data];
-                catch exception
-                    disp('fail_to_reassign_bdi_1')
+                   catch exception
+                    disp('fail_to_reassign_1')
                 end
                 try
-                    sv_data = [sv_data, supply_voltage_data];
-                catch exception
-                    disp('fail_to_reassign_sv_1')
+sv_data = [sv_data, supply_voltage_data];
+catch exception
+                    disp('fail_to_reassign_1')
                 end
-                try
-                    t_amp = [t_amp, t_amplifier];
-                catch exception
-                    disp('fail_to_reassign_t_amp_1')
-                end
-                try
+                   try
+                       t_amp = [t_amp, t_amplifier];
+                       catch exception
+                    disp('fail_to_reassign_1')
                     t_ai =  [t_ai,t_aux_input];
-                catch exception
-                    disp('fail_to_reassign_t_ai_1')
-                end
-                try
                     t_d = [t_d, t_dig];
-                catch exception
-                    disp('fail_to_reassign_t_d_1')
-                end
-                try
                     t_sv = [t_sv, t_supply_voltage];
+                    
+                    
                 catch exception
-                    disp('fail_to_reassign_t_sv_1')
+                    disp('fail_to_reassign_1')
                 end
             end
         end
@@ -440,7 +432,7 @@ for trial = 1 : length(trials)
             ylabel 'trial number';
             xlabel 'time (s)';
             xlim([0 1]);
-            %             ylim([0:1:LLEDtime]);
+%             ylim([0:1:LLEDtime]);
             title(strcat(casename, ' Lraster plot'));
             saveas(fig2, strcat(filename, '-Lraster.png'),'png');
             %     print(fig2, strcat(filename, '-Lraster'),'-dpng');
@@ -458,7 +450,7 @@ for trial = 1 : length(trials)
             ylabel 'trial number';
             xlabel 'time (s)';
             xlim([0 1]);
-            %             ylim([0:1:LLEDtime]);
+%             ylim([0:1:LLEDtime]);
             title(strcat(casename, ' Rraster plot'));
             saveas(fig3, strcat(trial, '-Rraster.png'),'png');
             %     print(fig3, strcat(filename, '-Rraster'),'-dpng');
