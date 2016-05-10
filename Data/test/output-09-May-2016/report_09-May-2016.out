@@ -1,0 +1,19 @@
+/Users/DoerLBH/Dropbox/git/OLab_IntanEphys/Data/test
+09-May-2016
+---------------------
+normal
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('zeros')" style="font-weight:bold">zeros</a>
+Size inputs must be integers.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('fast_arrange_Intan_RHD', '/Users/DoerLBH/Dropbox/git/OLab_IntanEphys/fast_arrange_Intan_RHD.m', 286)" style="font-weight:bold">fast_arrange_Intan_RHD</a> (<a href="matlab: opentoline('/Users/DoerLBH/Dropbox/git/OLab_IntanEphys/fast_arrange_Intan_RHD.m',286,0)">line 286</a>)
+    t_amplifier = zeros(1, num_amplifier_samples);
+
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('fast_160504_IntanEphysAnalysis', '/Users/DoerLBH/Dropbox/git/OLab_IntanEphys/fast_160504_IntanEphysAnalysis.m', 146)" style="font-weight:bold">fast_160504_IntanEphysAnalysis</a> (<a href="matlab: opentoline('/Users/DoerLBH/Dropbox/git/OLab_IntanEphys/fast_160504_IntanEphysAnalysis.m',146,0)">line 146</a>)
+                fast_arrange_Intan_RHD(files{ind});
+} 
+opentoline('/Users/DoerLBH/Dropbox/git/OLab_IntanEphys/fast_arrange_Intan_RHD.m',286,0)
+opentoline('/Users/DoerLBH/Dropbox/git/OLab_IntanEphys/fast_160504_IntanEphysAnalysis.m',146,0)
+fast_160504_IntanEphysAnalysis
+e.g.  /Users/DoerLBH/Dropbox/git/OLab_IntanEphys/Data
+What is your folder?: /Users/DoerLBH/Dropbox/git/OLab_IntanEphys/Data/

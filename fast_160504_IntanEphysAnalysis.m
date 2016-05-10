@@ -266,6 +266,7 @@ for trial = 1 : length(trials)
         xlabel 'time (s)';
         ylabel 'amplitude (A.U.)';
         legend('Raw Data', 'Spikes', 'Left Eye LED','Right Eye LED');
+        title(strcat(filename(last+1:end), ' spikes plot'));
         %     set(fig1, 'Position', [100, 100, 1920, 1080]);
         saveas(fig1, strcat(filename, '-spikes.png'),'png');
         %     print(fig1, strcat(filename, '-spikes'),'-dpng');
@@ -412,6 +413,7 @@ for trial = 1 : length(trials)
             ylabel 'trial number';
             xlabel 'time (s)';
             xlim([0 1]);
+            title(strcat(filename(last+1:end), ' Lraster plot'));
             saveas(fig2, strcat(filename, '-Lraster.png'),'png');
             %     print(fig2, strcat(filename, '-Lraster'),'-dpng');
             close(fig2);
@@ -428,7 +430,8 @@ for trial = 1 : length(trials)
             ylabel 'trial number';
             xlabel 'time (s)';
             xlim([0 1]);
-            saveas(fig3, strcat(filename, '-Rraster.png'),'png');
+            title(strcat(filename(last+1:end), ' Rraster plot'));
+            saveas(fig3, strcat(trial, '-Rraster.png'),'png');
             %     print(fig3, strcat(filename, '-Rraster'),'-dpng');
             close(fig3);
             
