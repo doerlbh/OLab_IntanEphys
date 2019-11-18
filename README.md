@@ -1,7 +1,7 @@
 # IntanEphys
 
-Language: MATLAB, bash
-Platform: MacOS, Linux, Windows
+
+
 
 Code for documentation: 
 
@@ -19,6 +19,12 @@ By [Baihan Lin](http://www.columbia.edu/~bl2681/) (at UW Olavarria Lab, Apr 2016
 
 (Shown here is the RHD2000 Amplifier Evaluation System, to which this code repository provides the analysis pipeline.)
 
+## Info
+
+Language: MATLAB, bash
+
+
+Platform: MacOS, Linux, Windows
 
 
 
