@@ -8,6 +8,7 @@ By [Baihan Lin](http://www.columbia.edu/~bl2681/) (at UW Olavarria Lab, Apr 2016
 
 
 ![RHD2000 Amplifier Evaluation System](./img/rhd.png "RHD2000 Amplifier Evaluation System")
+(Shown here is the RHD2000 Amplifier Evaluation System, to which this code repository provides the analysis pipeline.)
 
 ## Abstract
 
