@@ -1,5 +1,8 @@
 # IntanEphys
 
+Language: MATLAB, bash
+Platform: MacOS, Linux, Windows
+
 Code for documentation: 
 
 
